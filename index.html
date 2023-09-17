@@ -149,6 +149,10 @@
         console.log("device:"+device);
         }
 
+      function callFriends(){
+           vkBridge.send('VKWebAppShowInviteBox');
+      }
+
       function getLanguage() {
            var userLang = navigator.language || navigator.userLanguage; 
            userLang = userLang.substr(0, 2).toLowerCase();
