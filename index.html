@@ -80,6 +80,7 @@
 
     function auth(){
         console.log("auth...");
+        vkBridge.subscribe(eventHandler);
         vkBridge.send('VKWebAppGetUserInfo').then(_info =>{
           console.log(_info);
           var name=_info.first_name+' '+_info.last_name;
@@ -179,6 +180,18 @@
       function fullScreen() {
         if (device=="desktop") unityI.SetFullscreen(1);
       }
+
+      function eventHandler(e) {  //need for stop audio in android app
+      const { type, data } = e.detail;
+      switch(type) {
+        case 'VKWebAppViewHide':
+          unityI.SendMessage('YandexSDK', 'DisableSounds');
+          break;
+        case 'VKWebAppViewRestore': 
+          unityI.SendMessage('YandexSDK', 'EnableSounds');
+          break;
+        }
+    }
 
       function sendSDKtype() { unityI.SendMessage('YandexSDK','SetSDKtype',"0"); }
     </script>
